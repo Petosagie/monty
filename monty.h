@@ -1,12 +1,10 @@
-#ifndef MONTY_H
-#define MONTY_H
+#ifndef MONTY_HD
+#define MONTY_HD
 #define  _GNU_SOURCE
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
-#include <stdarg.h>
 #include <ctype.h>
 
 /**
@@ -24,6 +22,7 @@ typedef struct stack_s
 	struct stack_s *prev;
 	struct stack_s *next;
 } stack_t;
+
 /**
  * struct instruction_s - opcode and its function
  * @opcode: the opcode
@@ -37,44 +36,29 @@ typedef struct instruction_s
 	char *opcode;
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
-/*
-* stack functions
-*/
 
-void free_stack(stack_t **head);
-void free_argv(char **argv);
-int _is_digit(char *s);
-void push(stack_t **head, int data, unsigned int linum);
-void add_end(stack_t **head, int data, unsigned int linum);
-void pop(stack_t **head, unsigned int linum);
-void swap(stack_t **head, unsigned int linum);
-void add(stack_t **head, unsigned int linum);
-void sub(stack_t **head, unsigned int linum);
-void mul(stack_t **head, unsigned int linum);
-void mod(stack_t **head, unsigned int linum);
-void _div(stack_t **head, unsigned int linum);
-void pint(stack_t **head, unsigned int linum);
-void pchar(stack_t **head, unsigned int linum);
-void pstr(stack_t **head, unsigned int __attribute__((unused))linum);
-void rotl(stack_t **head, unsigned int __attribute__((unused))linum);
-void rotr(stack_t **head, unsigned int __attribute__((unused))linum);
-void pall(stack_t **head, unsigned int __attribute__((unused))linum);
-void nop(void);
-void (*f(char *opcode))(stack_t **stack, unsigned int line_num);
-void __push(char **argv, unsigned int linum, stack_t **head);
-int is_comment(char *s);
-int is_empty(char *s);
-/*
-* string functions
-*/
-size_t _strlen(const char *s);
-char *_strtok(char *s, char **p, char *sep);
-int _strcmp(char *src, char *dest);
-int _strcpy(char *src, char *dest);
-size_t len_words(char **s);
-int _memset(char *mem, size_t size);
-size_t len_from_to(char *p, int start, char stop);
-int _strcmp_index(char *src, char *dest);
-void _strcpy_index(char *src, char *dest, size_t start_index);
+
+extern int value;
+int value;
+
+void process_string(stack_t **stack, char *string, unsigned int line_no);
+void push(stack_t **stack, unsigned int line_number);
+void perform_operation(stack_t **stack, char *tokens, unsigned int line_no);
+int check_digit(char *token);
+void pall(stack_t **stack, unsigned int line_no);
+void pint(stack_t **stack, unsigned int line_no);
+void pop(stack_t **stack, unsigned int line_no);
+void swap(stack_t **stack, unsigned int line_no);
+void add(stack_t **stack, unsigned int line_no);
+void free_stack(stack_t **stack, unsigned int line_no);
+void nop(stack_t **stack, unsigned int line_no);
+void sub(stack_t **stack, unsigned int line_no);
+void op_div(stack_t **stack, unsigned int line_no);
+void mul(stack_t **stack, unsigned int line_no);
+void mod(stack_t **stack, unsigned int line_no);
+void pchar(stack_t **stack, unsigned int line_no);
+void pstr(stack_t **stack, unsigned int line_no);
+void rotl(stack_t **stack, unsigned int line_no);
+void rotr(stack_t **stack, unsigned int line_no);
 
 #endif
